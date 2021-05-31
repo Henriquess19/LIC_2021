@@ -6,6 +6,7 @@ Verificar com os stores:
 		80 HAL 
 		90 KBD
 		90 Doc
+		
 MÓDULOS:
 	LCD
 	DOOR
@@ -15,6 +16,4 @@ TESTES:
 	Simulação do KeyReceiver.kt e Door.kt
 	
 A FAZER:	
-	LCD LOGISIM
-	LOGISIM DA ARQUITETURA DO KT
-	CUPL KT 
+	LCD LOGISIM (IMPOSSIVEL TER O LCD EM LOGISIM)
