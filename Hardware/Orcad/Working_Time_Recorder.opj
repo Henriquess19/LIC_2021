@@ -43,19 +43,20 @@
       (Path "Design Resources")
       (Path "Design Resources" ".\working_time_recorder.dsn")
       (Path "Design Resources" ".\working_time_recorder.dsn" "SCHEMATIC1")
-      (Select "Design Resources" ".\working_time_recorder.dsn"))
+      (Select "Design Resources" ".\working_time_recorder.dsn" "SCHEMATIC1"
+         "DOOR"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -8 -31 0 200 0 185"))
+        (Placement "44 0 1 -1 -1 -8 -31 0 541 0 458"))
       (Tab 0))
     (Doc
       (Type "COrSchematicDoc")
       (Frame
         (Placement "44 0 1 -1 -1 -8 -31 52 978 52 276")
-        (Scroll "0 6")
-        (Zoom "102")
+        (Scroll "0 36")
+        (Zoom "162")
         (Occurrence "/"))
       (Path "C:\ORCAD\ORCAD_16.5_LITE\TOOLS\CAPTURE\WORKING_TIME_RECORDER.DSN")
       (Schematic "SCHEMATIC1")
@@ -63,10 +64,30 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 2 3 -1 -1 -8 -31 78 952 78 364")
-        (Scroll "252 0")
+        (Placement "44 0 1 -1 -1 -8 -31 78 952 78 364")
+        (Scroll "0 80")
         (Zoom "170")
         (Occurrence "/"))
       (Path "C:\ORCAD\ORCAD_16.5_LITE\TOOLS\CAPTURE\WORKING_TIME_RECORDER.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "KT"))))
+      (Page "KeyTransmitter"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 -165 1008 18 464")
+        (Scroll "-77 0")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path "C:\ORCAD\ORCAD_16.5_LITE\TOOLS\CAPTURE\WORKING_TIME_RECORDER.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "LCD"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -31 182 1359 182 632")
+        (Scroll "-191 40")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path "C:\ORCAD\ORCAD_16.5_LITE\TOOLS\CAPTURE\WORKING_TIME_RECORDER.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "DOOR"))))
