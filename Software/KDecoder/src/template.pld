@@ -1,0 +1,117 @@
+Name     template ; 
+PartNo   00 ; 
+Date     10/10/10 ;
+Revision 01 ;
+Designer Engineer ;
+Company  None ;
+Assembly None ; 
+Location  ;
+Device   v750c ;
+
+/* Start Here */
+PIN 1 = MCLK;
+PIN 2 = CLK; 
+PIN [3..6] = [KO0..3];
+PIN 7 = ACK;
+PIN [14..16] =[KI0..2];
+PIN [17..20] = [Q0..3];
+PIN 22 = Dval;
+PINNODE [28..30] = [C0..2];
+PINNODE [32..34] = [T0..2];
+PINNODE 26 = C3;
+PINNODE 31 = D0;
+PINNODE 27 = D1;
+
+
+/* Count */
+[C0..3].SP='b'0;
+[C0..3].AR='b'0;
+[C0..3].ck=!MCLK;
+CE=Kscan;
+R = !(C0&C1&!C2&C3);
+C0.d=(C0$CE)&R;
+C1.d=((C0&CE)$C1)&R;
+C2.d=((C0&CE&C1)$C2)&R;
+C3.d=((C0&CE&C1&C2)$C3)&R;
+
+[K0..3]= [C0..3];
+
+/*  Decoder */
+KI0 = !(!C2&!C3);
+KI1 = !(C2&!C3);
+KI2 = !(!C2&C3);
+
+/* KPressed */
+A0 = !C0&!C1;
+A1 = C0&!C1;
+A2 = !C0&C1;
+A3 = C0&C1;
+
+KPressed = !((A0&KO0)#(A1&KO1)#(A2&KO2)#(A3&KO3));
+
+/* Key Control */
+
+[D0..1].SP='b'0;
+[D0..1].AR='b'0;
+[D0..1].ck=MCLK;
+
+Kack = DAC;
+
+Sequence [D0..1]{
+	present 0
+		out Kscan;
+			if KPressed next 1;
+			default next 0;
+		
+	present 1 
+		out Kval;
+			if Kack next 2;
+			default next 1;
+		
+	present 2
+			if !Kack&!KPressed next 0; 
+			default next 2;
+}
+
+/* --------------------- */
+
+/* Control */
+
+[T0..2].SP='b'0;
+[T0..2].AR='b'0;
+[T0..2].ck=CLK;
+
+DAV = Kval;
+
+Sequence [T0..2]{
+	present 0
+			if DAV next 1;
+			default next 0;
+		
+	present 1
+		out Wreg;
+			default next 2;
+		
+	present 2
+		out DAC;
+			if !DAV next 3;
+			default next 2;
+			
+	present 3
+		out Dval;
+			if ACK next 4;
+			default next 3;	
+			
+	present 4
+			if !ACK next 0;
+			default next 4;	
+}
+
+
+/* Register */
+
+[Q0..3].SP='b'0;
+[Q0..3].AR='b'0;
+[Q0..3].ck=Wreg;
+
+[Q0..3].d = [K0..3];
