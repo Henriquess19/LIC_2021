@@ -1,0 +1,19 @@
+Verificar em simulação o KeyReceiver.kt e Door.kt
+
+Verificar com os stores:
+		90/95 KeyBuffer
+		75 Elec
+		80 HAL 
+		90 KBD
+		90 Doc
+
+ASM MAL DO KT
+LOGISIM DA ARQUITETURA DO KT
+
+CUPL KT E CUPL DOOR
+
+MODULO LCD
+MODULO DOOR
+ATUALIZAR MODULO KEY + COLOCAR KT
+
+ORCAD DOOR
