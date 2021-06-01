@@ -1,35 +1,38 @@
 import isel.leic.utils.Time
 
-object LCD { // Escreve no LCD usando a interface a 4 bits.
+object LCD { 
 
     private const val LINES = 2
-    private const val COLS = 16 // Dimensão do display.
-
-
-
+    private const val COLS = 16 // Display dimension
+    private const val Enable = 0x20
+    private const val RS = 0x10
+    private const val LCDData = 0x0F
+    private const val LCDLine = 0x40   //If wanted to write at the second line just need to add 0x40
+    private const val DisplayClear = 0x01
+    private const val CursorCMD = 0x80
+    
     private fun writeNibble(rs: Boolean, data: Int) {
-
-        //  RS -> i4
+        //  RS -> UsbPort.i4
         if (rs){
-            HAL.setBits(0x10)
+            HAL.setBits(RS)
         }else{
-            HAL.clrBits(0x10)
+            HAL.clrBits(RS)
         }
 
         //  EnableOn -> i5
-        HAL.setBits(0x20)
+        HAL.setBits(Enable)
 
         //Data
-        HAL.writeBits(0x0F,data) //00000011
+        HAL.writeBits(LCDData,data) 
 
         //  EnableOff -> i5
-        HAL.clrBits(0x20)
+        HAL.clrBits(Enable)
         Time.sleep(2)
     }
 
 
     private fun writeByte(rs: Boolean, data: Int) {
-        writeNibble(rs,data/16) // /16 == ShiftRight 4x
+        writeNibble(rs,data/16) // /16 == ShiftRight 4 times
         Time.sleep(2)
         writeNibble(rs,data)
     }
@@ -44,6 +47,11 @@ object LCD { // Escreve no LCD usando a interface a 4 bits.
 
 
     fun init() {
+
+        /**
+         * All the "fly" variables, like 5 or 0x08.. It's for the LCD configuration
+         * They're times and commands got in the manual
+         */
 
         val temp1 = Time.getTimeInMillis() + 80
         while (Time.getTimeInMillis() <= temp1){}
@@ -61,29 +69,29 @@ object LCD { // Escreve no LCD usando a interface a 4 bits.
         writeNibble(false,0x03)
 
         writeNibble(false,0x02)
-        writeCMD(0x28) // N=1 e F= 0
+        writeCMD(0x28) // N=1 & F= 0
         writeCMD(0x08)
         writeCMD(0x01)
-        writeCMD(0x06) // I/D=1 e S=0
+        writeCMD(0x06) // I/D=1 & S=0
         writeCMD(0x0F)
     }
 
-    // Escreve um caráter na posição corrente.
+    // Char write at the position.
     fun write(c: Char) {
         writeDATA(c.toInt())
     }
-    // Escreve uma string na posição corrente.
+    // String write at the position.
     fun write(text: String) {
         text.forEach { write(it) }
     }
 
     fun cursor(line: Int, column: Int) {
-        val x = column + (line*0x40)
-        writeCMD(x+0x80)
+        val x = column + (line* LCDLine)
+        writeCMD(x+ CursorCMD)
     }
 
     fun clear() {
-        writeCMD(0x01)
+        writeCMD(DisplayClear)
     }
 }
 
@@ -103,7 +111,6 @@ fun main(){
         LCD.clear()
         LCD.write(x)
     }*/
-
 
     //LCD.write("Hey")
 }

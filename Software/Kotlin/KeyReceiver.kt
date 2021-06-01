@@ -2,33 +2,38 @@ import isel.leic.utils.Time
 import kotlin.math.pow
 
 object KeyReceiver {
+    
+    private const val TXclk = 0x40
+    private const val TXd = 0x40
+    private const val NumbIterations = 6
+    private val KeyIterations = (1..4) 
+    
     /**
         TXclk -> Output 6
-        TXd
-        -> Input 6
+        TXd-> Input 6
      **/
     fun init(){
-        HAL.clrBits(0x40)
+        HAL.clrBits(TXclk)
     }
 
     fun rcv():Int {
         var count = 0
-        var s = -1.0
-        if(!HAL.isBit(0x40)) {
+        var s = -1.0                    
+        if(!HAL.isBit(TXd)) {
             s=0.0
-            while (count <= 6) {
-                HAL.setBits(0x40)
-                Time.sleep(50)
-                HAL.clrBits(0x40)
-                Time.sleep(50)
-                val x = HAL.readBits(0x40)
-                if (count in 1..4) {
-                    if (x > 0) s += ((2.0).pow(count -1))
+            while (count <= NumbIterations) {
+                HAL.setBits(TXclk)
+                Time.sleep(5)
+                HAL.clrBits(TXclk)
+                Time.sleep(5)
+                val x = HAL.readBits(TXd)
+                if (count in KeyIterations) {
+                    if (x > 0) s += ((2.0).pow(count -1))   /* Recreation on just one number of the key value */
                 }
                 count++
             }
         }
-        return s.toInt()
+        return s.toInt()               /* If s = -1 the higher code will understand like incorrect value */
     }
 }
 
@@ -39,3 +44,4 @@ fun main(){
         Time.sleep(250)
     }
 }
+
