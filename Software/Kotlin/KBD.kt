@@ -51,6 +51,6 @@ fun main(){
     KBD.init()
     while (true) {
         print(KBD.waitKey(500))
-        Time.sleep(50)
+        //Time.sleep(50)
     }
 }
