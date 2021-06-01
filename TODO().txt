@@ -16,5 +16,5 @@ TESTES:
 	Simulação do KeyReceiver.kt e Door.kt
 	
 A FAZER:	
-	LCD LOGISIM (IMPOSSIVEL TER O LCD EM LOGISIM)
+	LCD LOGISIM (java -jar logisim-generic-2.7.1.jar)
 	DESENHO DA ARQUITETURA CHEGADA DE KT
