@@ -27,4 +27,8 @@ object TUI {
     }
 }
 
-
+fun main(){
+    LCD.init()
+    println(TUI.key(4,false))
+    /*println(TUI.key(4,true))*/
+}
