@@ -8,10 +8,6 @@ MÓDULOS:
 	DOOR
 	ATUALIZAR KEY + COLOCAR KT
 
-TESTES:	
-	Simulação do KeyReceiver.kt e Door.kt
-	
 A FAZER:	
-	METER MAIN COM TESTES EM TODOS OS CODIGOS
-	VARIAVEIS
-
+	MAIN - TUI
+	Simulação do KeyReceiver.kt e Door.
