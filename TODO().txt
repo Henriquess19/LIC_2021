@@ -18,3 +18,4 @@ TESTES:
 A FAZER:	
 	LCD LOGISIM (java -jar logisim-generic-2.7.1.jar)
 	DESENHO DA ARQUITETURA CHEGADA DE KT
+	ASM KT
