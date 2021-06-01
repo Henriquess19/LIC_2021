@@ -2,10 +2,6 @@
 
 Verificar com os stores:
 		90/95 KeyBuffer
-		75 Elec
-		80 HAL 
-		90 KBD
-		90 Doc
 		
 MÓDULOS:
 	LCD
@@ -16,5 +12,7 @@ TESTES:
 	Simulação do KeyReceiver.kt e Door.kt
 	
 A FAZER:	
-	LCD LOGISIM (IMPOSSIVEL TER O LCD EM LOGISIM)
 	DESENHO DA ARQUITETURA CHEGADA DE KT
+	ASM KT
+	METER MAIN COM TESTES EM TODOS OS CODIGOS
+	TIRAR VHDL DO MODULO DO KT

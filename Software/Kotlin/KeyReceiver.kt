@@ -32,3 +32,10 @@ object KeyReceiver {
     }
 }
 
+fun main(){
+    KeyReceiver.init()
+    while (true){
+        println(KeyReceiver.rcv())
+        Time.sleep(250)
+    }
+}
