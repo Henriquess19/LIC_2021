@@ -1,6 +1,10 @@
+
+
 object Door{
+    const val WrMask = 0x40
+    //const val WrMask = 0x40
     fun init(){
-        HAL.clrBits(0x40)       /*Wr Mask*/
+        HAL.clrBits(WrMask)      
 
     }
 
@@ -15,10 +19,10 @@ object Door{
 
         val x = 0x10 + spd
         HAL.writeBits(0x1F,x)  /*Dout Mask*/
-        HAL.setBits(0x40)           /*Wr Mask*/
+        HAL.setBits(WrMask)           /*Wr Mask*/
 
         while (!HAL.isBit(0x20)/*Busy Mask*/){}
-        HAL.clrBits(0x40)
+        HAL.clrBits(WrMask)
     }
 
     fun close(speed: Int){
@@ -27,10 +31,10 @@ object Door{
 
         val x = 0x00 + spd
         HAL.writeBits(0x1F,x)   /*Dout Mask*/
-        HAL.setBits(0x40)            /*Wr Mask*/
+        HAL.setBits(WrMask)            /*Wr Mask*/
 
         while (!HAL.isBit(0x20)/*Busy Mask*/){} /*W8ing for the busy signal*/
-        HAL.clrBits(0x40)
+        HAL.clrBits(WrMask)
     }
 
 
