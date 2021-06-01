@@ -3,9 +3,9 @@
 Verificar com os stores:
 		90/95 KeyBuffer
 		75 Elec
-		80 HAL ->Main()Testes
-		90 KBD ->Main()Testes
-		90 Doc
+		80 HAL -> Main()Testes
+		90 KBD -> Main()Testes
+		90 Doc -> VHDL
 		
 MÓDULOS:
 	LCD
