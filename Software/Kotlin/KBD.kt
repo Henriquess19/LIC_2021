@@ -2,9 +2,9 @@ import isel.leic.utils.Time
 
 object KBD {
     const val NONE = 0
-    const val ACKMask = 0x80
-    const val DValMask = 0x80
-    const val KeyValue = 0x0F
+    private const val ACKMask = 0x80
+    private const val DValMask = 0x80
+    private const val KeyValue = 0x0F
     
     fun init() {
         HAL.clrBits(ACKMask)
