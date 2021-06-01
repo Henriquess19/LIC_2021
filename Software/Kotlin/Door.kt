@@ -1,8 +1,8 @@
 object Door{
-    const val WrMask = 0x40
-    const val BusyMask = 0x20
-    const val DOutMask = 0x1F
-    const val MaxSpeed = 0x0F
+    private const val WrMask = 0x40
+    private const val BusyMask = 0x20
+    private const val DOutMask = 0x1F
+    private const val MaxSpeed = 0x0F
     
     fun init(){
         HAL.clrBits(WrMask)
