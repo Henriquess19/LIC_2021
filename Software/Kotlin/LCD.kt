@@ -4,12 +4,12 @@ object LCD {
 
     private const val LINES = 2
     private const val COLS = 16 // Display dimension
-    const val Enable = 0x20
-    const val RS = 0x10
-    const val LCDData = 0x0F
-    const val LCDLine = 0x40   //If wanted to write at the second line just need to add 0x40
-    const val DisplayClear = 0x01
-    const val CursorCMD = 0x80
+    private const val Enable = 0x20
+    private const val RS = 0x10
+    private const val LCDData = 0x0F
+    private const val LCDLine = 0x40   //If wanted to write at the second line just need to add 0x40
+    private const val DisplayClear = 0x01
+    private const val CursorCMD = 0x80
     
     private fun writeNibble(rs: Boolean, data: Int) {
         //  RS -> UsbPort.i4
