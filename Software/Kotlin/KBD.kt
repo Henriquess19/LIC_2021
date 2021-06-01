@@ -1,17 +1,19 @@
 import isel.leic.utils.Time
 
-
 object KBD {
     const val NONE = 0
-
+    const val ACKMask = 0x80
+    const val DValMask = 0x80
+    const val KeyValue = 0x0F
+    
     fun init() {
-        HAL.clrBits(0x80)
+        HAL.clrBits(ACKMask)
     }
 
     fun getKey(): Char {
         var x:Char = NONE.toChar()
-        if (HAL.isBit(0x80)) {
-              x = when (HAL.readBits(0x0F)) {
+        if (HAL.isBit(ACKMask)) {
+              x = when (HAL.readBits(KeyValue)) {
                 0x00 -> '1'
                 0x01 -> '4'
                 0x02 -> '7'
@@ -26,10 +28,9 @@ object KBD {
                 0X0B -> '#'
                 else -> NONE.toChar()
             }
-            HAL.setBits(0x80)
-            while (HAL.isBit(0x80)){}
-
-            HAL.clrBits(0x80)
+            HAL.setBits(ACKMask)
+            while (HAL.isBit(DValMask)){} /*Waiting for Dval to be 0*/
+            HAL.clrBits(ACKMask)
             return x
         }
         return x
