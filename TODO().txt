@@ -9,4 +9,4 @@ MÓDULOS:
 	ATUALIZAR KEY + COLOCAR KT
 
 A FAZER:	
-	Simulação do KeyReceiver.kt e Door.
+	Simulação do KeyReceiver.kt e Door
