@@ -5,14 +5,14 @@ object KBD {
     private const val ACKMask = 0x80
     private const val DValMask = 0x80
     private const val KeyValue = 0x0F
-    
+
     fun init() {
         HAL.clrBits(ACKMask)
     }
 
     fun getKey(): Char {
         var x:Char = NONE.toChar()
-        if (HAL.isBit(ACKMask)) {
+        if (HAL.isBit(DValMask)) {
               x = when (HAL.readBits(KeyValue)) {
                 0x00 -> '1'
                 0x01 -> '4'
@@ -49,9 +49,10 @@ object KBD {
 }
 
 fun main(){
+    HAL.init()
     KBD.init()
     while (true) {
-        print(KBD.waitKey(500))
-        //Time.sleep(50)
+        print(KBD.waitKey(50))
+        Time.sleep(50)
     }
 }

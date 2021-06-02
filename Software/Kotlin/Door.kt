@@ -3,14 +3,14 @@ object Door{
     private const val BusyMask = 0x20
     private const val DOutMask = 0x1F
     private const val MaxSpeed = 0x0F
-    
+
     fun init(){
         HAL.clrBits(WrMask)
     }
 
 /**
  * V0~3 -> 0x0F
- * 
+ *
  * OpenClose ->  OPEN = 0x10 & CLOSE = 0x00
  */
 
@@ -19,8 +19,8 @@ object Door{
         if (spd > MaxSpeed) spd=MaxSpeed
 
         val x = 0x10 + spd              /*Open action + speed*/
-        HAL.writeBits(DOutMask,x)  
-        HAL.setBits(WrMask)           
+        HAL.writeBits(DOutMask,x)
+        HAL.setBits(WrMask)
 
         while (!HAL.isBit(BusyMask)){} /*Waiting for the busy signal*/
         HAL.clrBits(WrMask)
@@ -31,8 +31,8 @@ object Door{
         if (spd > MaxSpeed) spd=MaxSpeed
 
         val x = 0x00 + spd             /*Close action + speed*/
-        HAL.writeBits(DOutMask,x)   
-        HAL.setBits(WrMask)            
+        HAL.writeBits(DOutMask,x)
+        HAL.setBits(WrMask)
 
         while (!HAL.isBit(BusyMask)){} /*Waiting for the busy signal*/
         HAL.clrBits(WrMask)

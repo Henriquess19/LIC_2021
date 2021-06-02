@@ -1,4 +1,4 @@
-import isel.leic.UsbPort
+import isel.leic.*
 import isel.leic.utils.Time
 
 object HAL {
@@ -18,7 +18,7 @@ object HAL {
 
     fun writeBits(mask: Int, value: Int) {
         out = mask.inv().and(out)
-        out = value.or(out)
+        out = value.and(mask).or(out)
         UsbPort.out(out.inv())
     }
 
@@ -38,7 +38,7 @@ fun main(){
     while (true){
         println(HAL.readBits(0x40))
         //HAL.clrBits(0X01)
-        HAL.writeBits(0x3C,0X04)
+        HAL.writeBits(0x40,0XFF)
         //HAL.isBit(0X80)
         Time.sleep(1000)
     }

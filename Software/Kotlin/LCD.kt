@@ -1,6 +1,7 @@
+import isel.leic.*
 import isel.leic.utils.Time
 
-object LCD { 
+object LCD {
 
     private const val LINES = 2
     private const val COLS = 16 // Display dimension
@@ -10,7 +11,7 @@ object LCD {
     private const val LCDLine = 0x40   //If wanted to write at the second line just need to add 0x40
     private const val DisplayClear = 0x01
     private const val CursorCMD = 0x80
-    
+
     private fun writeNibble(rs: Boolean, data: Int) {
         //  RS -> UsbPort.i4
         if (rs){
@@ -23,7 +24,7 @@ object LCD {
         HAL.setBits(Enable)
 
         //Data
-        HAL.writeBits(LCDData,data) 
+        HAL.writeBits(LCDData,data)
 
         //  EnableOff -> i5
         HAL.clrBits(Enable)
@@ -97,8 +98,8 @@ object LCD {
 
 fun main(){
     LCD.init()
-    val tui = TUI.key(4,false)
-    println(tui)
+    /*val tui = TUI.key(4,false)
+    println(tui)*/
 
     /*while (true) {
         val y = KBD.waitKey(500)
@@ -106,11 +107,11 @@ fun main(){
         if (y == '*')LCD.clear()
     }*/
 
-    /*while (true){
+    while (true){
         val x = readLine()!!
         LCD.clear()
         LCD.write(x)
-    }*/
+    }
 
     //LCD.write("Hey")
 }
