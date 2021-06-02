@@ -57,44 +57,11 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 -55 1118 20 518")
+        (Placement "44 0 1 -1 -1 -1 -1 131 1304 22 520")
         (Scroll "-77 0")
         (Zoom "100")
         (Occurrence "/"))
       (Path
          "C:\USERS\RICAR\ONEDRIVE\DOCUMENTOS\GITHUB\LIC_2021\HARDWARE\ORCAD\ORCAD_MODULOKEY\WORKING_TIME_RECORDER.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "Keyboard_Reader"))
-    (Doc
-      (Type "COrSchematicDoc")
-      (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 108 1281 241 687")
-        (Scroll "-77 0")
-        (Zoom "100")
-        (Occurrence "/"))
-      (Path
-         "C:\USERS\RICAR\ONEDRIVE\DOCUMENTOS\GITHUB\LIC_2021\HARDWARE\ORCAD\ORCAD_MODULOKEY\WORKING_TIME_RECORDER.DSN")
-      (Schematic "SCHEMATIC1")
-      (Page "KeyTransmitter"))
-    (Doc
-      (Type "COrSchematicDoc")
-      (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 535 1708 34 615")
-        (Scroll "-77 0")
-        (Zoom "100")
-        (Occurrence "/"))
-      (Path
-         "C:\USERS\RICAR\ONEDRIVE\DOCUMENTOS\GITHUB\LIC_2021\HARDWARE\ORCAD\ORCAD_MODULOKEY\WORKING_TIME_RECORDER.DSN")
-      (Schematic "SCHEMATIC1")
-      (Page "DOOR"))
-    (Doc
-      (Type "COrSchematicDoc")
-      (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 -334 839 -18 428")
-        (Scroll "-77 0")
-        (Zoom "100")
-        (Occurrence "/"))
-      (Path
-         "C:\USERS\RICAR\ONEDRIVE\DOCUMENTOS\GITHUB\LIC_2021\HARDWARE\ORCAD\ORCAD_MODULOKEY\WORKING_TIME_RECORDER.DSN")
-      (Schematic "SCHEMATIC1")
-      (Page "LCD"))))
+      (Page "Keyboard_Reader"))))
