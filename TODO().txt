@@ -10,3 +10,6 @@ MÓDULOS:
 
 A FAZER:	
 	Simulação do KeyReceiver.kt e Door
+	TXclck -> o7
+	Open -> Time -> Close
+	Object App

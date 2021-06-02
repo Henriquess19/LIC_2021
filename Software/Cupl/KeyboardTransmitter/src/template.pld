@@ -40,7 +40,7 @@ Sequence[T0..2]{
 		default next 2;
 		
 	Present 3
-		out ON,Reset;
+		out Reset;
 		default next 4;
 	
 	Present 4
