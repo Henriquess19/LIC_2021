@@ -47,9 +47,7 @@
     (FileView
       (Path "Design Resources")
       (Path "Design Resources" ".\working_time_recorder.dsn")
-      (Path "Design Resources" ".\working_time_recorder.dsn" "SCHEMATIC1")
-      (Select "Design Resources" ".\working_time_recorder.dsn" "SCHEMATIC1"
-         "DOOR"))
+      (Path "Design Resources" ".\working_time_recorder.dsn" "SCHEMATIC1"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -70,7 +68,7 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -1 -1 94 1267 414 860")
+        (Placement "44 0 1 -1 -1 -1 -1 108 1281 241 687")
         (Scroll "-77 0")
         (Zoom "100")
         (Occurrence "/"))
@@ -93,7 +91,7 @@
       (Type "COrSchematicDoc")
       (Frame
         (Placement "44 0 1 -1 -1 -1 -1 -334 839 -18 428")
-        (Scroll "-77 10")
+        (Scroll "-77 0")
         (Zoom "100")
         (Occurrence "/"))
       (Path
