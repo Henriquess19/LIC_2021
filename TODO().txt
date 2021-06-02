@@ -10,6 +10,8 @@ MÓDULOS:
 
 A FAZER:	
 	Simulação do KeyReceiver.kt e Door
-	TXclck -> o7
 	Open -> Time -> Close
 	Object App
+	Atualizar o codigo
+	Atualizar o Simul
+	Metodo de mostrar o tempo
