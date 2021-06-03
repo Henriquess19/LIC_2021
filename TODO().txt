@@ -10,8 +10,8 @@ ATUALIZAR AS PALS KT E DOOR DA AULA
 Object App
 
 A FAZER:	
-	Módulo DOOR
-	Módulo LCD
+	
+	
 	
 	
 	
