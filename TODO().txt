@@ -5,13 +5,10 @@ Verificar com os stores:
 		
 MÓDULOS:
 	LCD
-	DOOR
 	ATUALIZAR KEY + COLOCAR KT
 
 A FAZER:	
-	Simulação do KeyReceiver.kt e Door
-	Open -> Time -> Close
 	Object App
-	Atualizar o codigo
-	Atualizar o Simul
-	Metodo de mostrar o tempo
+	Módulo DOOR
+	
+	
