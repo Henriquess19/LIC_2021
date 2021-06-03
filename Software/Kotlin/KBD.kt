@@ -3,7 +3,7 @@ import isel.leic.utils.Time
 object KBD {
     const val NONE = 0
     private const val ACKMask = 0x80
-    private const val DValMask = 0x80
+    private const val DValMask = 0x10 //0x80 -> 0x10 is for simulation purposes
     private const val KeyValue = 0x0F
 
     fun init() {

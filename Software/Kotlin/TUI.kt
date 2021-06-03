@@ -53,9 +53,9 @@ object TUI {
     }
 
     fun time():String{
-        val time = LocalDateTime.now().toString()
-        val format = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm")
-        return time.format("dd:MM:yyyy HH:mm")
+        val time = LocalDateTime.now()
+        val format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+        return time.format(format)
     }
 
 
@@ -69,18 +69,19 @@ fun main(){
     KBD.init()
     LCD.init()
 
-    var user: Int? = null
-    var pass: Int? = null
-
-    val client:Ut = Ut(0,0,"Almeida")
-
     /*TUI.key(4,false)*/
     /*println(TUI.key(4,true))*/
 
     /*TUI.writecenter("Ricardo",0)*/
     /*TUI.writeright("Ricardo")*/
 
-    while (user == null || user == -1) {
+    var user: Int? = null
+    var pass: Int? = null
+
+    val client:Ut = Ut(0,0,"Almeida")
+
+
+    while (user != client.user) {
         TUI.writeleft(TUI.time(), 0)
         TUI.writeleft("USER:", 1)
         user = TUI.key(3, true)
@@ -88,13 +89,14 @@ fun main(){
             LCD.clear()
             TUI.writeleft(TUI.time(), 0)
             TUI.writeleft("USER NOT FOUND", 1)
-
+            Time.sleep(1000)
+            LCD.clear()
         }
     }
 
     LCD.clear()
 
-    while (pass == null) {
+    while (pass != client.pass) {
         TUI.writeleft(TUI.time(), 0)
         TUI.writeleft("PASS:", 1)
         pass = TUI.key(4, false)
@@ -102,6 +104,8 @@ fun main(){
             LCD.clear()
             TUI.writeleft(TUI.time(), 0)
             TUI.writeleft("PASS ERROR", 1)
+            Time.sleep(1000)
+            LCD.clear()
         }
     }
 
@@ -109,7 +113,7 @@ fun main(){
     TUI.writecenter("WELCOME",0)
     TUI.writecenter(client.name,1)
 
-    Door.open(10)
+    Door.open(15)
     Time.sleep(3000)
     Door.close(10)
 
