@@ -61,6 +61,6 @@ Sequence [C0..C2]{
 [R0..4].AR='b'0;
 [R0..4].ck=busy;
 [R0..4].d = [Din0..4];
-[Dout1..4]=[R1..4];
+[Dout0..3]=[R0..3];
 
-Dout0=R0#T;
+Dout4=R4#T;
