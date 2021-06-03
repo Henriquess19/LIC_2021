@@ -12,7 +12,7 @@ object Door{
  * V0~3 -> 0x0F
  *
  * OpenClose ->  OPEN = 0x10 & CLOSE = 0x00
- */
+ **/
 
     fun open(speed:Int){
         var spd=speed
