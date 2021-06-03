@@ -45,7 +45,7 @@ Sequence[T0..2]{
 	
 	Present 4
 		out ON;
-		if	END next 0;
+		if END next 0;
 		default next 4;
 }
 
