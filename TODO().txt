@@ -4,14 +4,14 @@ Verificar com os stores:
 		90/95 KeyBuffer
 		
 MÓDULOS:
-	LCD
 	ATUALIZAR KEY + COLOCAR KT
 	
-ATUALIZAR AS PALS KT E DOOR
+ATUALIZAR AS PALS KT E DOOR DA AULA
 Object App
 
 A FAZER:	
 	Módulo DOOR
+	Módulo LCD
 	
 	
 	
