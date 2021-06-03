@@ -55,4 +55,15 @@
       (Type "COrCapturePMDoc")
       (Frame
         (Placement "44 1 1 30 568 -8 -31 307 848 135 592"))
-      (Tab 0))))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -31 52 503 52 488")
+        (Scroll "197 0")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\RICAR\ONEDRIVE\DOCUMENTOS\GITHUB\LIC_2021\HARDWARE\ORCAD\ORCAD_MODULOKEY\WORKING_TIME_RECORDER.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "DOOR"))))
