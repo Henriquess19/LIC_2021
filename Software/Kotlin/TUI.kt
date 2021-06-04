@@ -13,7 +13,7 @@ object TUI {
         var i =0
 
         do {
-            val x = KBD.waitKey(25000)
+            val x = KBD.waitKey(5000)
             if ((s == 0.0 && x == '*') || x == KBD.NONE.toChar()) return -1
             if (x == '*') {
                 LCD.clear()
@@ -61,63 +61,19 @@ object TUI {
 
 }
 
-data class Ut(val user:Int ,val pass:Int,val name:String )
-
 fun main(){
 
     HAL.init()
     KBD.init()
     LCD.init()
 
-    /*TUI.key(4,false)*/
-    /*println(TUI.key(4,true))*/
+    TUI.key(4,false)
+    TUI.key(4,true)
 
-    /*TUI.writecenter("Ricardo",0)*/
-    /*TUI.writeright("Ricardo")*/
-
-    var user: Int? = null
-    var pass: Int? = null
-
-    val client:Ut = Ut(0,0,"Almeida")
-
-
-    while (user != client.user) {
-        TUI.writeleft(TUI.time(), 0)
-        TUI.writeleft("USER:", 1)
-        user = TUI.key(3, true)
-        if (user == -1 || user != client.user.toInt()) {
-            LCD.clear()
-            TUI.writeleft(TUI.time(), 0)
-            TUI.writeleft("USER NOT FOUND", 1)
-            Time.sleep(1000)
-            LCD.clear()
-        }
-    }
-
-    LCD.clear()
-
-    while (pass != client.pass) {
-        TUI.writeleft(TUI.time(), 0)
-        TUI.writeleft("PASS:", 1)
-        pass = TUI.key(4, false)
-        if (pass == -1 || pass != client.pass.toInt() ) {
-            LCD.clear()
-            TUI.writeleft(TUI.time(), 0)
-            TUI.writeleft("PASS ERROR", 1)
-            Time.sleep(1000)
-            LCD.clear()
-        }
-    }
-
-    LCD.clear()
-    TUI.writecenter("WELCOME",0)
-    TUI.writecenter(client.name,1)
-
-    Door.open(15)
-    Time.sleep(3000)
-    Door.close(10)
-
-    //TUI.writeleft("PASS:" + TUI.key(4,false),1)
+    TUI.writecenter("Ricardo",0)
+    TUI.writeright("Ricardo",1)
+    TUI.writeleft("PASS:" + TUI.key(4,false),1)
 }
+
 
 
