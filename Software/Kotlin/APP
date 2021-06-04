@@ -1,0 +1,58 @@
+import isel.leic.utils.Time
+
+data class Ut(val user:Int ,val pass:Int,val name:String )
+
+
+object APP {
+    fun user(gajo:Ut, tent:Int?) {
+        var tent = tent
+        while (tent != gajo.user) {
+            TUI.writeleft(TUI.time(), 0)
+            TUI.writeleft("USER:", 1)
+            tent = TUI.key(3, true)
+            if (tent == -1 || tent != gajo.user) {
+                LCD.clear()
+                TUI.writeleft(TUI.time(), 0)
+                TUI.writeleft("USER NOT FOUND", 1)
+                Time.sleep(1000)
+                LCD.clear()
+            }
+        }
+    }
+    fun pass(gajo:Ut, tent:Int?){
+        var tent=tent
+        LCD.clear()
+        while (tent != gajo.pass) {
+            TUI.writeleft(TUI.time(), 0)
+            TUI.writeleft("PASS:", 1)
+            tent = TUI.key(4, false)
+            if (tent == -1 || tent != gajo.pass ) {
+                LCD.clear()
+                TUI.writeleft(TUI.time(), 0)
+                TUI.writeleft("PASS ERROR", 1)
+                Time.sleep(1000)
+                LCD.clear()
+            }
+        }
+        LCD.clear()
+        TUI.writecenter("WELCOME",0)
+        TUI.writecenter(gajo.name,1)
+        Door.open(14)
+        Time.sleep(3000)
+        Door.close(10)
+    }
+}
+
+fun main() {
+    var user: Int? = null
+    var pass: Int? = null
+
+    val client:Ut = Ut(0,0,"Almeida")
+
+    HAL.init()
+    KBD.init()
+    LCD.init()
+    APP.user(client,pass)
+    APP.pass(client,pass)
+
+}
