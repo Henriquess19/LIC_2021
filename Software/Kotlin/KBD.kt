@@ -5,29 +5,26 @@ object KBD {
     private const val ACKMask = 0x80
     private const val DValMask = 0x10 //0x80 -> 0x10 is for simulation purposes
     private const val KeyValue = 0x0F
+    private const val SERIAL_INTERFACE = false
+    private val KEYBOARD= charArrayOf('1', '4', '7','*','2','5','8','0','3','6','9','#')
 
     fun init() {
         HAL.clrBits(ACKMask)
     }
+    fun getKey():Char{
+        if(SERIAL_INTERFACE) return getKeySerial()
+        else return getKeyParallel()
+    }
 
-    fun getKey(): Char {
+    private fun getKeySerial():Char{
+        val x =  KeyReceiver.rcv()
+        return KEYBOARD[x]
+    }
+
+    private fun getKeyParallel():Char {
         var x:Char = NONE.toChar()
         if (HAL.isBit(DValMask)) {
-              x = when (HAL.readBits(KeyValue)) {
-                0x00 -> '1'
-                0x01 -> '4'
-                0x02 -> '7'
-                0x03 -> '*'
-                0x04 -> '2'
-                0x05 -> '5'
-                0x06 -> '8'
-                0x07 -> '0'
-                0x08 -> '3'
-                0X09 -> '6'
-                0X0A -> '9'
-                0X0B -> '#'
-                else -> NONE.toChar()
-            }
+            x=KEYBOARD[HAL.readBits(KeyValue)]
             HAL.setBits(ACKMask)
             while (HAL.isBit(DValMask)){} /*Waiting for Dval to be 0*/
             HAL.clrBits(ACKMask)
