@@ -1,16 +1,15 @@
-import isel.leic.*
 import isel.leic.utils.Time
 
 object LCD {
 
     private const val LINES = 2
     private const val COLS = 16 // Display dimension
-    private const val Enable = 0x20
+    private const val ENABLE = 0x20
     private const val RS = 0x10
-    private const val LCDData = 0x0F
-    private const val LCDLine = 0x40   //If wanted to write at the second line just need to add 0x40
-    private const val DisplayClear = 0x01
-    private const val CursorCMD = 0x80
+    private const val LCD_DATA = 0x0F
+    private const val LCD_LINE = 0x40   //If wanted to write at the second line just need to add 0x40
+    private const val DISPLAY_CLEAR = 0x01
+    private const val CURSOR_CMD = 0x80
 
     private fun writeNibble(rs: Boolean, data: Int) {
         //  RS -> UsbPort.i4
@@ -21,13 +20,13 @@ object LCD {
         }
 
         //  EnableOn -> i5
-        HAL.setBits(Enable)
+        HAL.setBits(ENABLE)
 
         //Data
-        HAL.writeBits(LCDData,data)
+        HAL.writeBits(LCD_DATA,data)
 
         //  EnableOff -> i5
-        HAL.clrBits(Enable)
+        HAL.clrBits(ENABLE)
         Time.sleep(2)
     }
 
@@ -53,19 +52,15 @@ object LCD {
          * All the "fly" variables, like 5 or 0x08.. It's for the LCD configuration
          * They're times and commands got in the manual
          */
-
-        val temp1 = Time.getTimeInMillis() + 80
-        while (Time.getTimeInMillis() <= temp1){}
+        Time.sleep(80)
 
         writeNibble(false,0x03)
 
-        val temp2 = Time.getTimeInMillis() + 5
-        while (Time.getTimeInMillis() <= temp2){}
+        Time.sleep(5)
 
         writeNibble(false,0x03)
 
-        val temp3 = Time.getTimeInMillis() + 1
-        while (Time.getTimeInMillis() <= temp3){}
+        Time.sleep(1)
 
         writeNibble(false,0x03)
 
@@ -87,19 +82,19 @@ object LCD {
     }
 
     fun cursor(line: Int, column: Int) {
-        val x = column + (line* LCDLine)
-        writeCMD(x+ CursorCMD)
+        val x = column + (line* LCD_LINE)
+        writeCMD(x+ CURSOR_CMD)
     }
 
     fun clear() {
-        writeCMD(DisplayClear)
+        writeCMD(DISPLAY_CLEAR)
     }
 }
 
 fun main(){
     LCD.init()
-    /*val tui = TUI.key(4,false)
-    println(tui)*/
+    val tui = TUI.key(4,false)
+    println(tui)
 
     /*while (true) {
         val y = KBD.waitKey(500)
@@ -107,11 +102,11 @@ fun main(){
         if (y == '*')LCD.clear()
     }*/
 
-    while (true){
+    /*while (true){
         val x = readLine()!!
         LCD.clear()
         LCD.write(x)
-    }
+    }*/
 
     //LCD.write("Hey")
 }
