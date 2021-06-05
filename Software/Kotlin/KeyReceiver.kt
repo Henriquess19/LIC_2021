@@ -3,32 +3,32 @@ import kotlin.math.pow
 
 object KeyReceiver {
 
-    private const val TXclk = 0x40
-    private const val TXd = 0x40
-    private const val NumbIterations = 6
-    private val KeyIterations = (1..4)
+    private const val TX_CLK = 0x40
+    private const val TXD = 0x40
+    private const val NUMB_ITERATION = 6
+    private val KEY_ITERATION = (1..4)
 
     /**
-        TXclk -> Output 6
-        TXd-> Input 6
+    TXclk -> Output 6
+    TXd-> Input 6
      **/
 
     fun init(){
-        HAL.clrBits(TXclk)
+        HAL.clrBits(TX_CLK)
     }
 
     fun rcv():Int {
         var count = 0
         var s = -1.0
-        if(!HAL.isBit(TXd)) {
+        if(!HAL.isBit(TXD)) {
             s=0.0
-            while (count <= NumbIterations) {
-                HAL.setBits(TXclk)
+            while (count <= NUMB_ITERATION) {
+                HAL.setBits(TX_CLK)
                 Time.sleep(5)
-                HAL.clrBits(TXclk)
+                HAL.clrBits(TX_CLK)
                 Time.sleep(5)
-                val x = HAL.readBits(TXd)
-                if (count in KeyIterations) {
+                val x = HAL.readBits(TXD)
+                if (count in KEY_ITERATION) {
                     if (x > 0) s += ((2.0).pow(count -1))   /* Recreation on just one number of the key value */
                 }
                 count++
@@ -45,4 +45,3 @@ fun main(){
         Time.sleep(250)
     }
 }
-
