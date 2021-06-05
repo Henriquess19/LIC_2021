@@ -4,52 +4,55 @@ data class Ut(val user:Int ,val pass:Int,val name:String )
 
 
 object APP {
-    fun user(client:Ut, tent:Int?, numeroTentativas:Int):Boolean {
-        TUI.writeleft(TUI.time(), 0)
+    const val DOOR_OPEN_VELOCITY= 13
+    const val DOOR_CLOSE_VELOCITY= 12
+
+    fun user(worker:Ut, tent:Int?, numeroTentativas:Int, line:Int):Boolean {
         var tent = tent
         for(i in 1..numeroTentativas){
-            TUI.writeleft("USER:", 1)
+            TUI.writeleft("USER:", line)
             tent = TUI.key(3, true)
-            if (tent==client.user) {
+            if (tent==worker.user) {
                 return true
             }
-        lineClear(1)
-        TUI.writeleft("USER NOT FOUND", 1)
+        lineClear(line)
+        TUI.writeleft("USER NOT FOUND", line)
         Time.sleep(1000)
-        lineClear(1)
+        lineClear(line)
     }
         return false
     }
-    fun pass(client:Ut, tent:Int?, numeroTentativas:Int){
-        var tent=tent
+    fun pass(worker:Ut, tent:Int?, numeroTentativas:Int, line:Int):Boolean {
+        var tent = tent
         lineClear(1)
-        var x = false
-        for(i in 1..numeroTentativas) {
-            TUI.writeleft(TUI.time(), 0)
-            TUI.writeleft("PASS:", 1)
+        for (i in 1..numeroTentativas) {
+            TUI.writeleft("PASS:", line)
             tent = TUI.key(4, false)
-            if (tent==client.pass) {
-                x=true
-                break
+            if (tent == worker.pass) {
+                return true
             }
-            lineClear(1)
-            TUI.writeleft("PASS ERROR", 1)
+            lineClear(line)
+            TUI.writeleft("PASS ERROR", line)
             Time.sleep(1000)
-            lineClear(1)
+            lineClear(line)
         }
-        if(x) {
+        return false
+    }
+    fun doorMovement(user:Boolean, pass:Boolean, worker:Ut){
+        if(user && pass){
             LCD.clear()
             TUI.writecenter("Welcome", 0)
-            TUI.writecenter(client.name, 1)
-            Door.open(15)
+            TUI.writecenter(worker.name, 1)
+            Door.open(DOOR_OPEN_VELOCITY)
             Time.sleep(3000)
-            Door.close(10)
+            Door.close(DOOR_CLOSE_VELOCITY)
         }
         else {
-            lineClear(1)
-            TUI.writeleft("Fail to login",1)
+            LCD.clear()
+            TUI.writeleft("Fail to login", 0)
         }
     }
+
     fun lineClear(x:Int){
         TUI.writeleft("                ",x)
     }
@@ -58,15 +61,15 @@ object APP {
 fun main() {
     var user: Int? = null
     var pass: Int? = null
-
-    val client = Ut(0,0,"Cricardo")
-
+    val client = Ut(0,0,"Marcelo")
     HAL.init()
     KBD.init()
     LCD.init()
-    if(APP.user(client,user, 3)) {
-        APP.pass(client, pass, 3)
+    TUI.writeleft(TUI.time(), 0)
+    val guy=APP.user(client,user, 1, 1)
+    val monkey = APP.pass(client, pass, 3, 1)
+    if(guy) {
+        monkey
     }
-    else TUI.writeleft("Fail to login", 1)
-
+    APP.doorMovement(guy,monkey, client)
 }
