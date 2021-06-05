@@ -8,7 +8,7 @@ object HAL {
     }
 
     fun isBit(mask: Int): Boolean {
-       return readBits(mask) > 0
+        return readBits(mask) > 0
     }
 
     fun readBits(mask: Int):Int {
