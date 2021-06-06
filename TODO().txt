@@ -6,11 +6,15 @@ ENVIAR 2ªAVALIAÇÃO
 
 VELOCIDADE DOOR (Possivel erro do simulador)
 
-
+90/95 KeyBuffer
 
 A FAZER:
-	ATUALIZAR KEY + COLOCAR KT	
-	90/95 KeyBuffer
+	Módulo KBD 
+		-> Ponto 3 + imagem(nomes)
+		-> Ponto 4.3
+		-> ANEXOS H
+	
+	
 	
 	
 	
