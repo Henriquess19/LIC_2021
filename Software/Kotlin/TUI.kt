@@ -69,6 +69,6 @@ fun main(){
     TUI.key(4,true)
 
     TUI.writecenter("Ricardo",0)
-    TUI.writeright("Ricardo")
+    TUI.writeright("Ricardo",1)
     TUI.writeleft("PASS:" + TUI.key(4,false),1)
 }

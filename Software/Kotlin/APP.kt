@@ -4,15 +4,15 @@ data class Ut(val user:Int ,val pass:Int,val name:String )
 
 
 object APP {
-    const val DOOR_OPEN_VELOCITY= 12
-    const val DOOR_CLOSE_VELOCITY= 12
+    private const val DOOR_OPEN_VELOCITY= 12
+    private const val DOOR_CLOSE_VELOCITY= 1
 
     fun user(worker:Ut, tent:Int?, numeroTentativas:Int, line:Int):Boolean {
-        var tent = tent
+        var tries = tent
         for(i in 1..numeroTentativas){
             TUI.writeleft("USER:", line)
-            tent = TUI.key(3, true)
-            if (tent==worker.user) {
+            tries = TUI.key(3, true)
+            if (tries==worker.user) {
                 return true
             }
         lineClear(line)
@@ -23,12 +23,12 @@ object APP {
         return false
     }
     fun pass(worker:Ut, tent:Int?, numeroTentativas:Int, line:Int):Boolean {
-        var tent = tent
+        var tries = tent
         lineClear(line)
         for (i in 1..numeroTentativas) {
             TUI.writeleft("PASS:", line)
-            tent = TUI.key(4, false)
-            if (tent == worker.pass) {
+            tries = TUI.key(4, false)
+            if (tries == worker.pass) {
                 return true
             }
             lineClear(line)
@@ -47,7 +47,7 @@ object APP {
             Door.close(DOOR_CLOSE_VELOCITY)
         }
 
-    fun lineClear(x:Int){
+    fun lineClear(x:Int){                           /* Function to prevent clear all the screen but just one line*/
         TUI.writeleft("                ",x)
     }
 }
@@ -58,8 +58,8 @@ fun main() {
     LCD.init()
     TUI.writeleft(TUI.time(), 0)
 
-    var user: Int? = null
-    var pass: Int? = null
+    val user: Int? = null
+    val pass: Int? = null
     val client = Ut(0,0,"Marcelo")
 
         val condA=APP.user(client,user, 1, 1)

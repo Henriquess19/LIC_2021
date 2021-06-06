@@ -13,6 +13,7 @@ object Door{
      *
      * OpenClose ->  OPEN = 0x10 & CLOSE = 0x00
      */
+
     fun open(speed:Int){
         var spd=speed
         if (spd > MAX_SPEED) spd=MAX_SPEED
