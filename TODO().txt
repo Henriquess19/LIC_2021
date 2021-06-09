@@ -9,11 +9,6 @@ VELOCIDADE DOOR (Possivel erro do simulador)
 90/95 KeyBuffer
 
 A FAZER:
-	Módulo KBD 
-		-> Ponto 3 + imagem(nomes)
-		-> Ponto 4.3
-		-> ANEXOS H
-	
 	
 	
 	
