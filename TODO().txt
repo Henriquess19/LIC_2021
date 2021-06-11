@@ -9,6 +9,8 @@ VELOCIDADE DOOR (Possivel erro do simulador)
 90/95 KeyBuffer
 
 MUDAR O CUPL DO KT
+ATUALIZAR O KEYCODE
+APP
 
 A FAZER:
 	
