@@ -5,7 +5,7 @@ object KBD {
     private const val ACK_MASK = 0x80
     private const val DVAL_MASK = 0x10 //0x80 -> 0x10 is for simulation purposes
     private const val KEY_VALUE = 0x0F
-    private const val SERIAL_INTERFACE = false
+    private const val SERIAL_INTERFACE = true
     private val KEYBOARD= charArrayOf('1', '4', '7','*','2','5','8','0','3','6','9','#')
 
     fun init() {
@@ -18,6 +18,7 @@ object KBD {
 
     private fun getKeySerial():Char{
         val x =  KeyReceiver.rcv()
+        if (x == -1) return NONE.toChar()
         return KEYBOARD[x]
     }
 

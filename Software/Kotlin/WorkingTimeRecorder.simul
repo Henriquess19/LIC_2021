@@ -25,20 +25,20 @@ kbd.K[0-3] -> kb.D[0-3]
 kbd.val -> kb.DAV
 
 #Key buffer Parallel
-kb.DAC -> kbd.ack
-kb.K[0-3] -> UsbPort.I[0-3]
-kb.Dval -> UsbPort.I4
-UsbPort.O7 -> kb.ACK
+#kb.DAC -> kbd.ack
+#kb.K[0-3] -> UsbPort.I[0-3]
+#kb.Dval -> UsbPort.I4
+#UsbPort.O7 -> kb.ACK
 
 #Key buffer
-#kb.DAC -> kbd.ack
-#kb.K[0-3] -> kt.D[0-3]
-#kb.Dval -> kt.DAV
+kb.DAC -> kbd.ack
+kb.K[0-3] -> kt.D[0-3]
+kb.Dval -> kt.DAV
 
 #Key Transmitter
-#kt.DAC -> kb.ACK
-#kt.Txd -> UsbPort.I6
-#UsbPort.O7 -> kt.TXclk
+kt.DAC -> kb.ACK
+kt.Txd -> UsbPort.I6
+UsbPort.O7 -> kt.TXclk
 
 # --------------------------------------
 # LCD

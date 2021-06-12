@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter
 
 
 object TUI {
-    const val LCD_COLUMNS = 16
+    private const val LCD_COLUMNS = 16
 
     fun key(l:Int, vis :Boolean):Int{
         var s = 0.0
@@ -38,15 +38,13 @@ object TUI {
     }
 
     fun writecenter(s:String,line:Int){
-        var size = s.length
-        size = (LCD_COLUMNS-s.length*1.5-1).toInt()
+        val size = (LCD_COLUMNS-s.length)/2.toInt()
         LCD.cursor(line,size)
         LCD.write(s)
     }
 
     fun writeright(s:String,line:Int){
-        var size = s.length
-        size = LCD_COLUMNS-s.length
+        val size = LCD_COLUMNS-s.length
         LCD.cursor(line,size)
         LCD.write(s)
     }

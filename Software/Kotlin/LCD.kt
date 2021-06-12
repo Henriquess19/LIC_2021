@@ -52,6 +52,7 @@ object LCD {
          * All the "fly" variables, like 5 or 0x08.. It's for the LCD configuration
          * They're times and commands got in the manual
          */
+
         Time.sleep(80)
 
         writeNibble(false,0x03)
