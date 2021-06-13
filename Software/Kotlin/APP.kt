@@ -60,10 +60,13 @@ object APP {
 
     fun entryDoor(worker:Ut){
         worker.entryTime = Time.getTimeInMillis()
+
         TUI.writecenter("Welcome", 0)
         TUI.writecenter(worker.name, 1)
+
         LogFile.entryUser(worker,worker.entryTime)
         /**Update User**/
+
         moveDoor()
         resetUserTime(worker)
     }
@@ -71,24 +74,30 @@ object APP {
     fun awayDoor(worker: Ut){
         val awayTime = Time.getTimeInMillis()
         worker.acumulateTime = awayTime - worker.entryTime
-        /*TUI.writeleft(millisToHours(worker.entryTime),0)
-        TUI.writeright(millisToHours(awayTime),0)*/
-        TUI.writecenter(worker.name,0)
-        TUI.writecenter(millisToHours(worker.acumulateTime),1)
-        LogFile.awayUser(worker,worker.entryTime)
+
+        TUI.writeleft(LogFile.calendarAway(worker.entryTime),0)
+        TUI.writeleft(LogFile.calendarAway(awayTime),1)
+        TUI.writeright(millisToHours(worker.acumulateTime),1)
+
+        LogFile.awayUser(worker,awayTime)
         /**Update User**/
+
+        Time.sleep(3000)
+        LCD.clear()
+        TUI.writecenter("Good-Bye",0)
+        TUI.writecenter(worker.name,1)
         moveDoor()
+
         resetUserTime(worker)
     }
 
     fun millisToHours(millis:Long):String{
         var time = millis
-        val hour = (time/(60*60*1000))%24
+        val hour = (time/(60*60*1000))
         time -= hour * (60 * 60 * 1000)
-        val minutes = (time/(60*1000))%60
+        val minutes = (time/(60*1000))
         time -= minutes*(60*1000)
-        val seconds = (time/1000)%60
-        return ("${hour}h:${minutes}m:${seconds}s")
+        return ("${hour}:${minutes}")
     }
 
     fun resetUserTime(worker: Ut){
@@ -100,9 +109,8 @@ object APP {
     }
 
     fun restart(tentNumb:Int, writeLine: Int){
-        Time.sleep(5000)
+        Time.sleep(3000)
         LCD.clear()
-        Time.sleep(5000)
         appPlay(tentNumb, writeLine)
     }
 
