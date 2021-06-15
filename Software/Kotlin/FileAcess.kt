@@ -26,7 +26,18 @@ object FileAcess {
         TODO("METER GENÉRICO")
     }
 
+    fun allUser():Array<Ut?>{
+        val array:Array<Ut?> = arrayOfNulls<Ut?>(1000)
+        var i =0
+
+       listUser.forEach {
+        lines -> lines!!.split('j').forEach {
+        array[i++] = Ut(it[0].toInt(),it[1].toInt(),listUser[i]!!.split(';')[2],it[3].toLong(),if (it.lastIndex != listUser[i]!!.lastIndex) it[i].toLong() else 0L) } }
+
+     return array
+}
+
 }
 fun main(){
-    println(FileAcess.getUser(0))
+   FileAcess.allUser()
 }
