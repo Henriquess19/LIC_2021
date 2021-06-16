@@ -3,12 +3,11 @@ import java.io.File
 
 object Maintenance {
 
-    /** Perceber botão foi ativado **/
-
     fun init(){
         LCD.clear()
         TUI.writecenter("Out Of Service",0)
         TUI.writecenter("*_*",1)
+        systemModem()
     }
 
     private fun systemModem(){
@@ -18,61 +17,84 @@ object Maintenance {
             "2" -> removeUser()
             "3" -> userList()
             "4" -> shutDown()
-            else -> notFound()
+            else -> operationNotFound()
         }
     }
 
-    private fun notFound(){
+    private fun operationNotFound(){
         println("Operation Not Found \n ")
         systemModem()
     }
 
-    private fun addUser(){
-        /** Primeiro user livre da lista **/
-        println("User name:")
-        val name = readLine()!!
-        if (name.length<=16){
-            /** Pedir a pass **/
-        }else{
-            println("Please choose one UserName with maxium 16 chars")
-            /** Pedir usar name again **/
-        }
+    fun addUser(){
+        val name = name()
+        val pass = pass()
+        val add= Users.addUser(pass,name)
+
+        if (add != null) println("You user is: $add")
+        else println("Sorry, userList is full xOxO")
     }
 
-    private fun removeUser(){
+    private fun name():String{
+        print("UserName(Máx 16 Chars): ")
+        val name = readLine()!!
+        if (name.length>16){
+            println("Please choose one UserName with maxium 16 chars")
+            name()
+        }
+        return name
+    }
+
+    private fun pass():Int{
+        print("UserPass(3 Chars): ")
+        val pass = readLine()!!
+        if (pass.length !=3){
+            println("Please choose one UserPass with 3 chars")
+            pass()
+        }
+        return pass.toInt()
+    }
+
+    fun removeUser(){
         println("Insert UserID")
         val userId = readLine()!!.toInt()
-        val user = FileAcess.getUser(userId)
+        val user = Users.getUser(userId)
         if (user != null){
             println(user.name + ",Is this the User to remove? Yes or No")
             val confirmation = readLine()!!
-            if (("Y" in confirmation) || "y" in confirmation) {
-                /** REMOVE USER FROM LIST **/
+            if ("Y" in confirmation  || "y" in confirmation) {
+                Users.removeUser(userId)
             }
 
         }else{
             println("User Not Found \n")
         }
 
-        println("1 - Remove Another User \n 2 - Choose Another Operation")
+        println("1 - Remove Another User \n2 - Choose Another Operation \nOther - Exit")
         val option = readLine()!!.toInt()
         if (option == 1) removeUser()
-        else systemModem()
+        else if (option==2) systemModem()
+        else return
     }
 
     fun userList(){
-        File("USERS.txt").forEachLine { println(it.split(';')) }
+      Users.listUser().filterNotNull().forEach{println(it)}
     }
 
-    private fun shutDown(){
-        /** ??? **/
+    fun shutDown(){
+        LCD.off()
+        Users.updateList()
     }
 
 
 
 }
 fun main(){
-    LCD.init()
-    Maintenance.init()
-    Maintenance.userList()
+   // LCD.init()
+    //Maintenance.init()
+    //Maintenance.userList()
+    Users.init()
+    Maintenance.removeUser()
+    Maintenance.shutDown()
+
 }

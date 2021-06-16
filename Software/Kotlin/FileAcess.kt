@@ -1,43 +1,30 @@
 import java.io.File
+import java.io.FileWriter
+import java.sql.Time
 
 object FileAcess {
-    private var listUser: Array<String?> = emptyArray()
 
-    init {
-        listUser = read()
-    }
-
-    fun read(): Array<String?> {
-        val list = File("USERS.txt").inputStream()
+    fun read(file:String): Array<String?> {
+        val list = File(file).inputStream()
         val lineList = arrayOfNulls<String>(1000)
         list.bufferedReader().useLines { lines -> lines.forEach { lineList[it.split(';')[0].toInt()] = it } }
         return lineList
     }
 
-
-    fun getUser(indiceUser: Int): Ut? {
-        if (listUser[indiceUser] == null || indiceUser == -1){
-            return null
+    fun write(file:String, list: List<String>){
+        val text = FileWriter(file)
+        for (i in list.indices) {
+            text.append(list[i])
+            /** DAR \n apos cada linha **/
+            /** Guardar o logfile e escrever após **/
         }
-        var entry = 0L
-        val user = listUser[indiceUser]!!.split(';')
-        if (user.lastIndex != listUser[indiceUser]!!.lastIndex) entry = user[user.lastIndex].toLong()
-        return Ut(user[0].toInt(),user[1].toInt(),listUser[indiceUser]!!.split(';')[2],user[3].toLong(),entry)
-        TODO("METER GENÉRICO")
+
+        text.close()
     }
 
-    fun allUser():Array<Ut?>{
-        val array:Array<Ut?> = arrayOfNulls<Ut?>(1000)
-        var i =0
-
-       listUser.forEach {
-        lines -> lines!!.split('j').forEach {
-        array[i++] = Ut(it[0].toInt(),it[1].toInt(),listUser[i]!!.split(';')[2],it[3].toLong(),if (it.lastIndex != listUser[i]!!.lastIndex) it[i].toLong() else 0L) } }
-
-     return array
 }
 
-}
+
 fun main(){
-   FileAcess.allUser()
+    LogFile.awayUser(Ut(0,0,"ei",0,0L),656)
 }

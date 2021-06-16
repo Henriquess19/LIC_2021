@@ -1,12 +1,10 @@
-import FileAcess.getUser
+import Users.getUser
 import isel.leic.utils.Time
-import java.util.concurrent.TimeUnit
-
-data class Ut(val user:Int ,val pass:Int,val name:String, var acumulateTime:Long, var entryTime:Long)
 
 object APP {
     private const val DOOR_OPEN_VELOCITY= 11
     private const val DOOR_CLOSE_VELOCITY= 11
+    private const val MMASK = 0x80
 
     fun user(writeLine:Int):Ut {
         TUI.writeleft("USER:", writeLine)
@@ -55,32 +53,28 @@ object APP {
     fun moveDoor(){
         Door.open(DOOR_OPEN_VELOCITY)
         Time.sleep(3000)
-        //Door.close(DOOR_CLOSE_VELOCITY)
+        Door.close(DOOR_CLOSE_VELOCITY)
     }
 
     fun entryDoor(worker:Ut){
-        worker.entryTime = Time.getTimeInMillis()
+        val entryTime = Time.getTimeInMillis()
 
         TUI.writecenter("Welcome", 0)
         TUI.writecenter(worker.name, 1)
 
-        LogFile.entryUser(worker,worker.entryTime)
-        /**Update User**/
-
         moveDoor()
-        resetUserTime(worker)
+
+        LogFile.entryUser(worker,worker.entryTime)
+        Users.updateUser(worker.user,worker.acumulateTime,entryTime)
     }
 
     fun awayDoor(worker: Ut){
         val awayTime = Time.getTimeInMillis()
-        worker.acumulateTime = awayTime - worker.entryTime
+        val acumulateTime = awayTime - worker.entryTime
 
         TUI.writeleft(LogFile.calendarAway(worker.entryTime),0)
         TUI.writeleft(LogFile.calendarAway(awayTime),1)
-        TUI.writeright(millisToHours(worker.acumulateTime),1)
-
-        LogFile.awayUser(worker,awayTime)
-        /**Update User**/
+        TUI.writeright(millisToHours(acumulateTime),1)
 
         Time.sleep(3000)
         LCD.clear()
@@ -88,7 +82,8 @@ object APP {
         TUI.writecenter(worker.name,1)
         moveDoor()
 
-        resetUserTime(worker)
+        LogFile.awayUser(worker,awayTime)
+        Users.updateUser(worker.user,acumulateTime,0L)
     }
 
     fun millisToHours(millis:Long):String{
@@ -100,10 +95,6 @@ object APP {
         return ("${hour}:${minutes}")
     }
 
-    fun resetUserTime(worker: Ut){
-        worker.entryTime=0L
-    }
-
     fun lineClear(x:Int){                           /* Function to prevent clear all the screen but just one line*/
         TUI.writeleft("                ",x)
     }
@@ -111,13 +102,22 @@ object APP {
     fun restart(tentNumb:Int, writeLine: Int){
         Time.sleep(3000)
         LCD.clear()
-        appPlay(tentNumb, writeLine)
+        mode(tentNumb, writeLine)
     }
 
-    fun appPlay (tentNumb:Int, writeLine: Int){
+    private fun appPlay (tentNumb:Int, writeLine: Int){
         TUI.writeright(TUI.time(),0)
         pass(tentNumb,writeLine)
         restart(tentNumb,writeLine)
+    }
+
+    fun mode(tentNumb:Int, writeLine: Int){
+        if (HAL.readBits(MMASK) == 1) maintence()
+        else appPlay(tentNumb,writeLine)
+    }
+
+    private fun maintence(){
+        Maintenance.init()
     }
 }
 
@@ -125,7 +125,7 @@ fun main() {
     HAL.init()
     KBD.init()
     LCD.init()
+    Users.init()
 
-
-    APP.appPlay(3,1)
+    APP.mode(3,1)
 }

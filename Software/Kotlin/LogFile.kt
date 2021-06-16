@@ -1,31 +1,28 @@
-import java.io.*
 import java.util.*
-import kotlin.math.min
 
 object LogFile {
+    private var listLog= mutableListOf<String>()
 
-    /** Estamos com 1 mês de atraso na data **/
 
     fun entryUser(worker:Ut,time:Long){
         val calendar = calendarLog(time)
         val user = "-> ${worker.user}:${worker.name}"
-        val all = calendar + user
-        fileUpdate(all)
+        val entry = calendar + user
+        listLog += entry
+        logUpdate(listLog.toList())
     }
 
-    fun fileUpdate(text:String){
-        val file = FileInputStream("LOG.txt")
-        val textfinal = FileOutputStream("LOG.txt")
-        file.transferTo(textfinal)
-        //add text
+    fun logUpdate(list: List<String>){
+        FileAcess.write("LOG.txt",list)
     }
 
 
     fun awayUser(worker:Ut,time:Long){
         val calendar = calendarLog(time)
         val user = "<- ${worker.user}:${worker.name}"
-        val all = calendar + user
-        fileUpdate(all)
+        val away = calendar + user
+        listLog += away
+        logUpdate(listLog.toList())
     }
 
     fun calendarLog(time:Long):String{
@@ -37,7 +34,7 @@ object LogFile {
         val minute= calendar.get(Calendar.MINUTE)
 
         val day = calendar.get(Calendar.DATE)
-        val month = calendar.get(Calendar.MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1 /** Because indeces **/
         val year = calendar.get(Calendar.YEAR)
 
         return "$day/$month/$year $hour:$minute "
@@ -71,6 +68,4 @@ object LogFile {
             else -> "Sat"
         }
     }
-
-
 }

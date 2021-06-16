@@ -10,6 +10,7 @@ object LCD {
     private const val LCD_LINE = 0x40   //If wanted to write at the second line just need to add 0x40
     private const val DISPLAY_CLEAR = 0x01
     private const val CURSOR_CMD = 0x80
+    private const val DISPLAY_OFF = 0x08 //D -> 0  C&B -> Dont Care
 
     private fun writeNibble(rs: Boolean, data: Int) {
         //  RS -> UsbPort.i4
@@ -89,6 +90,10 @@ object LCD {
 
     fun clear() {
         writeCMD(DISPLAY_CLEAR)
+    }
+
+    fun off(){
+        writeCMD(DISPLAY_OFF)
     }
 }
 
