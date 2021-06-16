@@ -11,17 +11,15 @@ object FileAcess {
         return lineList
     }
 
-    fun write(file:String, list: List<String>){
-        val text = FileWriter(file)
-        for (i in list.indices) {
-            text.append(list[i])
-            /** DAR \n apos cada linha **/
-            /** Guardar o logfile e escrever após **/
-        }
+    fun write(file:String, list: List<String>,logNUsers:Boolean) {
 
+        val text = FileWriter(file, logNUsers)
+        for (i in list.indices) {
+            if (logNUsers) text.append("\n${list[i]}")
+            else text.append(list[i])
+        }
         text.close()
     }
-
 }
 
 

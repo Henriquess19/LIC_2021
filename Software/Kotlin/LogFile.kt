@@ -13,7 +13,7 @@ object LogFile {
     }
 
     fun logUpdate(list: List<String>){
-        FileAcess.write("LOG.txt",list)
+        FileAcess.write("LOG.txt",list,true)
     }
 
 

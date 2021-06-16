@@ -1,62 +1,65 @@
 import Users.getUser
+import com.sun.tools.javac.Main
 import isel.leic.utils.Time
 
 object APP {
     private const val DOOR_OPEN_VELOCITY= 11
     private const val DOOR_CLOSE_VELOCITY= 11
     private const val MMASK = 0x80
+    private const val TENTNUMB = 3
+    private const val WRITEACTIONSLINE = 1
 
-    fun user(writeLine:Int):Ut {
-        TUI.writeleft("USER:", writeLine)
+    private fun user():Ut {
+        TUI.writeleft("USER:", WRITEACTIONSLINE)
         val userNumb = TUI.key(3, true)
         var user:Ut? = null
         if (getUser(userNumb)!= null) {
                  user = getUser(userNumb)!!
         }
         else {
-            lineClear(writeLine)
-            TUI.writeleft("USER NOT FOUND", writeLine)
+            lineClear(WRITEACTIONSLINE)
+            TUI.writeleft("USER NOT FOUND", WRITEACTIONSLINE)
             Time.sleep(1000)
-            lineClear(writeLine)
-            user(writeLine)
+            lineClear(WRITEACTIONSLINE)
+            user()
         }
         return user!!
     }
 
-    fun pass(tentNumb:Int, writeLine: Int){
-        val user = user(writeLine)
-        lineClear(writeLine)
-        for (i in 1..tentNumb) {
-            TUI.writeleft("PASS:", writeLine)
+    private fun pass(){
+        val user = user()
+        lineClear(WRITEACTIONSLINE)
+        for (i in 1..TENTNUMB) {
+            TUI.writeleft("PASS:", WRITEACTIONSLINE)
             val code = TUI.key(4, false)
             if (code == user.pass) {
                 return doorAction(user)
             }
-            lineClear(writeLine)
-            TUI.writeleft("PASS ERROR", writeLine)
+            lineClear(WRITEACTIONSLINE)
+            TUI.writeleft("PASS ERROR", WRITEACTIONSLINE)
             Time.sleep(1000)
-            lineClear(writeLine)
+            lineClear(WRITEACTIONSLINE)
         }
-        return wrongPass(tentNumb, writeLine)
+        return wrongPass()
     }
 
-    fun wrongPass(tentNumb:Int, writeLine: Int){
-        return pass(tentNumb, writeLine)
+    private fun wrongPass(){
+        return pass()
     }
 
-    fun doorAction(worker:Ut){
+    private fun doorAction(worker:Ut){
             LCD.clear()
             if(worker.entryTime > 0L) awayDoor(worker)
             else entryDoor(worker)
     }
 
-    fun moveDoor(){
+    private fun moveDoor(){
         Door.open(DOOR_OPEN_VELOCITY)
         Time.sleep(3000)
         Door.close(DOOR_CLOSE_VELOCITY)
     }
 
-    fun entryDoor(worker:Ut){
+    private fun entryDoor(worker:Ut){
         val entryTime = Time.getTimeInMillis()
 
         TUI.writecenter("Welcome", 0)
@@ -68,7 +71,7 @@ object APP {
         Users.updateUser(worker.user,worker.acumulateTime,entryTime)
     }
 
-    fun awayDoor(worker: Ut){
+    private fun awayDoor(worker: Ut){
         val awayTime = Time.getTimeInMillis()
         val acumulateTime = awayTime - worker.entryTime
 
@@ -86,7 +89,7 @@ object APP {
         Users.updateUser(worker.user,acumulateTime,0L)
     }
 
-    fun millisToHours(millis:Long):String{
+    private fun millisToHours(millis:Long):String{
         var time = millis
         val hour = (time/(60*60*1000))
         time -= hour * (60 * 60 * 1000)
@@ -95,29 +98,26 @@ object APP {
         return ("${hour}:${minutes}")
     }
 
-    fun lineClear(x:Int){                           /* Function to prevent clear all the screen but just one line*/
-        TUI.writeleft("                ",x)
+    private fun lineClear(line:Int){                           /* Function to prevent clear all the screen but just one line*/
+        TUI.writeleft("                ",line)
     }
 
-    fun restart(tentNumb:Int, writeLine: Int){
-        Time.sleep(3000)
+    private fun restart(){
+        Time.sleep(1500)
         LCD.clear()
-        mode(tentNumb, writeLine)
+        mode()
     }
 
-    private fun appPlay (tentNumb:Int, writeLine: Int){
+    private fun appPlay (){
+        LCD.clear()
         TUI.writeright(TUI.time(),0)
-        pass(tentNumb,writeLine)
-        restart(tentNumb,writeLine)
+        pass()
+        restart()
     }
 
-    fun mode(tentNumb:Int, writeLine: Int){
-        if (HAL.readBits(MMASK) == 1) maintence()
-        else appPlay(tentNumb,writeLine)
-    }
-
-    private fun maintence(){
-        Maintenance.init()
+    fun mode(){
+        if (HAL.readBits(MMASK) != 0) Maintenance.init()
+        else appPlay()
     }
 }
 
@@ -127,5 +127,5 @@ fun main() {
     LCD.init()
     Users.init()
 
-    APP.mode(3,1)
+    APP.mode()
 }

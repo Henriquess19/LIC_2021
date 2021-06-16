@@ -23,16 +23,17 @@ object Maintenance {
 
     private fun operationNotFound(){
         println("Operation Not Found \n ")
-        systemModem()
+        restartOperations()
     }
 
-    fun addUser(){
+    private fun addUser(){
         val name = name()
         val pass = pass()
         val add= Users.addUser(pass,name)
 
         if (add != null) println("You user is: $add")
         else println("Sorry, userList is full xOxO")
+        restartOperations()
     }
 
     private fun name():String{
@@ -69,16 +70,12 @@ object Maintenance {
         }else{
             println("User Not Found \n")
         }
-
-        println("1 - Remove Another User \n2 - Choose Another Operation \nOther - Exit")
-        val option = readLine()!!.toInt()
-        if (option == 1) removeUser()
-        else if (option==2) systemModem()
-        else return
+        restartOperations()
     }
 
-    fun userList(){
-      Users.listUser().filterNotNull().forEach{println(it)}
+    private fun userList(){
+        Users.listUser().filterNotNull().forEach{println(it)}
+        restartOperations()
     }
 
     fun shutDown(){
@@ -86,7 +83,9 @@ object Maintenance {
         Users.updateList()
     }
 
-
+    private fun restartOperations(){
+        APP.mode()
+    }
 
 }
 fun main(){

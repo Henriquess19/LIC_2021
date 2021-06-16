@@ -8,7 +8,7 @@ object Users {
         listUser()
     }
 
-    fun toUser(userId:Int, it: List<String>):Ut{
+    private fun toUser(userId:Int, it: List<String>):Ut{
         return Ut(userId,it[1].toInt(),it[2],it[3].toLong(),it[4].toLong())
     }
 
@@ -31,7 +31,6 @@ object Users {
     }
 
     fun addUser(userPass:Int, userName:String):Ut?{
-        var added= false
         for(i in 0..999){
             if (userlist[i] == null) {
                 userlist[i] = Ut(i,userPass,userName,0,0L)
@@ -56,7 +55,7 @@ object Users {
                 lista[i]= "${i};${user.pass};${user.name};${user.acumulateTime};${user.entryTime}\n"
             }
         }
-        FileAcess.write("USERS.txt",lista.filterNotNull().toList())
+        FileAcess.write("USERS.txt",lista.filterNotNull().toList(),false)
     }
 
     fun updateUser(userId: Int,userAcumulateTime:Long,userEntryTime:Long){
