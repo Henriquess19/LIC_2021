@@ -50,8 +50,15 @@ UsbPort.O5 -> lcd.e
 # --------------------------------------
 # Door Controller
 # --------------------------------------
+# V3 | V2 | V1 | V0 | OC
+#UsbPort.O[0-4] -> dc.I[0-4]
+
+# OC | V3 | V2 | V1 | V0
+UsbPort.O[0-3] -> dc.I[1-4]
+UsbPort.O4 -> dc.I0
+
 UsbPort.O6  -> dc.wr
-UsbPort.O[0-4] -> dc.I[0-4]
+
 dc.busy -> UsbPort.I5
 dc.V[0-3] -> door.V[0-3]
 dc.On -> door.On/Off
