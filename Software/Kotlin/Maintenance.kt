@@ -47,10 +47,10 @@ object Maintenance {
     }
 
     private fun pass():Int{
-        print("UserPass(3 Chars): ")
+        print("UserPass(4 Chars): ")
         val pass = readLine()!!
-        if (pass.length !=3){
-            println("Please choose one UserPass with 3 chars")
+        if (pass.length !=4){
+            println("Please choose one UserPass with 4 chars")
             pass()
         }
         return pass.toInt()

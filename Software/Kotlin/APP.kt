@@ -67,7 +67,7 @@ object APP {
 
         moveDoor()
 
-        LogFile.entryUser(worker,worker.entryTime)
+        LogFile.entryUser(worker,entryTime)
         Users.updateUser(worker.user,worker.acumulateTime,entryTime)
     }
 
