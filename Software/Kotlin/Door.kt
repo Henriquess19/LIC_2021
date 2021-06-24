@@ -15,43 +15,36 @@ object Door{
      */
 
     fun open(speed:Int){
-        var spd=speed
-        if (spd > MAX_SPEED) spd=MAX_SPEED
-
+        var spd = speed
+        if (spd > MAX_SPEED) spd = MAX_SPEED
         val x = 0x10 + spd              /*Open action + speed*/
-        HAL.writeBits(D_OUT_MASK,x)
-        HAL.setBits(WR_MASK)
+        while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
+            HAL.writeBits(D_OUT_MASK, x)
+            HAL.setBits(WR_MASK)
+            HAL.clrBits(WR_MASK)
 
-        while (!HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
-        HAL.clrBits(WR_MASK)
     }
 
     fun close(speed: Int){
         var spd=speed
         if (spd > MAX_SPEED) spd=MAX_SPEED
-
         val x = 0x00 + spd             /*Close action + speed*/
+        while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
+
         HAL.writeBits(D_OUT_MASK,x)
         HAL.setBits(WR_MASK)
-
-        while (!HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
         HAL.clrBits(WR_MASK)
     }
 
 
     fun isFinished():Boolean{
-        while (HAL.isBit(BUSY_MASK)) {
-            return false
-        }
-        return true
+        return !HAL.isBit(BUSY_MASK)
     }
 }
 
 
 fun main(){
     Door.init()
-    TODO("Ver porque não funciona em simulação")
-
     while (true) {
         val x = (-100..100).random()        /* TestCode to give random number so door open or close with the value of x*/
         println(x)
