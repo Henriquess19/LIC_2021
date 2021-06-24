@@ -3,7 +3,8 @@ object Door{
     private const val BUSY_MASK = 0x20
     private const val D_OUT_MASK = 0x1F
     private const val MAX_SPEED = 0x0F
-
+    private const val OPEN_CMD = 0x10
+    private const val CLOSE_CMD = 0x00
     fun init(){
         HAL.clrBits(WR_MASK)
     }
@@ -17,7 +18,7 @@ object Door{
     fun open(speed:Int){
         var spd = speed
         if (spd > MAX_SPEED) spd = MAX_SPEED
-        val x = 0x10 + spd              /*Open action + speed*/
+        val x = OPEN_CMD + spd              /*Open action + speed*/
         while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
             HAL.writeBits(D_OUT_MASK, x)
             HAL.setBits(WR_MASK)
@@ -28,7 +29,7 @@ object Door{
     fun close(speed: Int){
         var spd=speed
         if (spd > MAX_SPEED) spd=MAX_SPEED
-        val x = 0x00 + spd             /*Close action + speed*/
+        val x = CLOSE_CMD + spd             /*Close action + speed*/
         while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
 
         HAL.writeBits(D_OUT_MASK,x)
