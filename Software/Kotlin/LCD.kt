@@ -33,8 +33,8 @@ object LCD {
 
 
     private fun writeByte(rs: Boolean, data: Int) {
-        writeNibble(rs,data/16) // /16 == ShiftRight 4 times
-        Time.sleep(2)
+        writeNibble(rs,data.shr(4)) // /16 == ShiftRight 4 times
+        Time.sleep(2) //testar assim
         writeNibble(rs,data)
     }
 
@@ -48,12 +48,10 @@ object LCD {
 
 
     fun init() {
-
         /**
          * All the "fly" variables, like 5 or 0x08.. It's for the LCD configuration
          * They're times and commands got in the manual
          */
-
         Time.sleep(80)
 
         writeNibble(false,0x03)
@@ -67,10 +65,12 @@ object LCD {
         writeNibble(false,0x03)
 
         writeNibble(false,0x02)
-        writeCMD(0x28) // N=1 & F= 0
+        //N foi 1 porque quer-se escrever em duas linhas, o de F = 0  para se obter o tamanho de 5 por 8 em cada caracter
+        writeCMD(0x28)
         writeCMD(0x08)
         writeCMD(0x01)
-        writeCMD(0x06) // I/D=1 & S=0
+        //de I/D =1 porque quer-se que o cursor incremente ao escrever e o de S=0 para não haver um Shift no display logo na sua inicialização
+        writeCMD(0x06)
         writeCMD(0x0F)
     }
 
@@ -99,20 +99,14 @@ object LCD {
 
 fun main(){
     LCD.init()
-    val tui = TUI.key(4,false)
-    println(tui)
-
-    /*while (true) {
+    while (true) {
         val y = KBD.waitKey(500)
         if (y != KBD.NONE.toChar() && y != '*')LCD.write(y)
         if (y == '*')LCD.clear()
-    }*/
-
-    /*while (true){
+    }
+    while (true){
         val x = readLine()!!
         LCD.clear()
         LCD.write(x)
-    }*/
-
-    //LCD.write("Hey")
+    }
 }
