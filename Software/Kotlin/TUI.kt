@@ -8,29 +8,36 @@ object TUI {
     private const val LCD_COLUMNS = 16
 
     fun key(l:Int, vis :Boolean):Int{
-        var s = 0.0
+        var s = -1.0
         var i =0
 
         do {
             val x = KBD.waitKey(5000)
-            if ((s == 0.0 && x == '*') || x == KBD.NONE.toChar()) return -1
+            if ((s == -1.0 && x == '*') || x == KBD.NONE.toChar()) return -1
             if (x == '*') {
-                LCD.clear()
+                lineClear(1)
+                if (l==4) writeleft("PIN:",1)       /* If l=4 -> Pin, if l=3 -> User */
+                else writeleft("USER:",1)
+                s=-1.0
                 i=0
             } else {
-                if (!vis) {
-                    LCD.write('*')
-                } else {
-                    LCD.write(x)
-                }
 
-                s += (x - '0') * ((10.0).pow(l - i - 1))
-                i++
+                if (i ==0)s+=1.0
+                if(x in ('0'..'9')) {
+                    s += (x - '0') * ((10.0).pow(l - i - 1)) //
+                    i++
+                    if (!vis) {
+                        LCD.write('*')
+                    } else {
+                        LCD.write(x)
+                    }
+                }
             }
         }while (i<l)
 
         return s.toInt()
     }
+
 
     fun writeleft(s:String,line:Int){
         LCD.cursor(line,0)
@@ -53,6 +60,9 @@ object TUI {
         val time = LocalDateTime.now()
         val format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
         return time.format(format)
+    }
+     fun lineClear(line:Int){                           /* Function to prevent clear all the screen but just one line*/
+        writeleft("                ",line)
     }
 
 
