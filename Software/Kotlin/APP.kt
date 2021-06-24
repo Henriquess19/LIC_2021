@@ -9,21 +9,20 @@ object APP {
     private const val TENTNUMB = 3
     private const val WRITEACTIONSLINE = 1
 
+
     private fun user():Ut {
         TUI.writeleft("USER:", WRITEACTIONSLINE)
         val userNumb = TUI.key(3, true)
-        var user:Ut? = null
         if (getUser(userNumb)!= null) {
-                 user = getUser(userNumb)!!
+                return getUser(userNumb)!!
         }
         else {
             lineClear(WRITEACTIONSLINE)
             TUI.writeleft("USER NOT FOUND", WRITEACTIONSLINE)
             Time.sleep(1000)
             lineClear(WRITEACTIONSLINE)
-            user()
+            return user()
         }
-        return user!!
     }
 
     private fun pass(){
