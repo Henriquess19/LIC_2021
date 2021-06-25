@@ -4,7 +4,7 @@ import kotlin.math.pow
 object KeyReceiver {
 
     private const val TX_CLK = 0x80
-    private const val TXD = 0x40
+     const val TXD = 0x40
     private const val NUMB_ITERATION = 6
     private val KEY_ITERATION = (1..4)
 

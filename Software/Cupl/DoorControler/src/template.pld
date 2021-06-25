@@ -10,17 +10,17 @@ Device   v750c ;
 
 /* Start Here */
 PIN 1 = CLK;
-PIN 2 = Wr;
+PIN 2 = WR;
 PIN [3..7] =[Din0..Din4] ;
-PIN 8=Sclose;
-PIN 9=Sopen;
+PIN 8=SClose;
+PIN 9=SOpen;
 PIN 10=Psensor;
 PIN 15 = Dout0;
 PIN [16..19]=[Dout1..4];
 PIN 20=On;
 PIN 23=busy;
-PINNODE[28..32]= [R0..R4];
-PINNODE [25..27]=[C0..C2];
+PINNODE[29..33]= [R0..R4];
+PINNODE [26..28]=[C0..C2];
 
 /*Control */
 [C0..2].SP='b'0;
@@ -30,36 +30,41 @@ PINNODE [25..27]=[C0..C2];
 Sequence [C0..C2]{
 
     present 0
-         if Wr  next 1;
-        default next 0;
+         if WR next 1;
+         default next 0;
 
     present 1 
-        out busy,On;
-            if R0 next 2;
-            default next 3;
+        out WReg,On;
+        default next 2;
 
     present 2
-        out T, busy, On;
-            if Sopen next 0;
-            default next 2;
+    	out On;
+	        if !WR & R0 next 3;
+	        if !WR & !R0 next 4;
+	        default next 2;
 
     present 3
-        out busy, On;
-            if Psensor next 4;
-            if !Psensor & Sclose next 0;
+        out T,busy, On;
+            if SOpen next 0;
             default next 3;
 
     present 4
-        out T, busy, On;
-            if Sopen next 3;
+        out busy, On;
+            if Psensor next 5;
+            if Psensor & SClose next 0;
             default next 4;
+            
+     present 5
+        out T,busy, On;
+            if SOpen next 4;
+            default next 5;
 }
 
 /* Register */
 
 [R0..4].SP='b'0;
 [R0..4].AR='b'0;
-[R0..4].ck=busy;
+[R0..4].ck=WReg;
 [R0..4].d = [Din0..4];
 [Dout0..3]=[R0..3];
 

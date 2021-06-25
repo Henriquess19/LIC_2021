@@ -12,16 +12,18 @@ object APP {
 
     private fun user():Ut {
         TUI.writeleft("USER:", WRITEACTIONSLINE)
-        val userNumb = TUI.key(3, true)
-        if (getUser(userNumb)!= null) {
-                return getUser(userNumb)!!
+        while (HAL.isBit(KeyReceiver.TXD)){
+            if (HAL.readBits(MMASK) != 0) Maintenance.init()
         }
-        else {
+        val userNumb= TUI.key(3, true)
+        return if (getUser(userNumb)!= null) {
+            getUser(userNumb)!!
+        } else {
             lineClear(WRITEACTIONSLINE)
             TUI.writeleft("USER NOT FOUND", WRITEACTIONSLINE)
             Time.sleep(1000)
             lineClear(WRITEACTIONSLINE)
-            return user()
+            user()
         }
     }
 

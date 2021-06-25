@@ -1,3 +1,4 @@
+import isel.leic.utils.Time
 import java.util.*
 
 object LogFile {
@@ -12,7 +13,7 @@ object LogFile {
         logUpdate(listLog.toList())
     }
 
-    fun logUpdate(list: List<String>){
+    private fun logUpdate(list: List<String>){
         FileAcess.write("LOG.txt",list,true)
     }
 
@@ -52,12 +53,12 @@ object LogFile {
         return "$dayWeek.$hour:$minute "
     }
 
-    fun timeAmPm(ampm:Int,time: Int):Int{
+    private fun timeAmPm(ampm:Int, time: Int):Int{
         return if (ampm == 1 )  time + 12
         else time
     }
 
-    fun intToDay(day:Int):String{
+    private fun intToDay(day:Int):String{
         return when(day){
             1 -> "Sun"
             2 -> "Mon"
@@ -68,4 +69,8 @@ object LogFile {
             else -> "Sat"
         }
     }
+}
+fun main(){
+    println(LogFile.calendarLog(Time.getTimeInMillis()))
+    println(LogFile.calendarAway(Time.getTimeInMillis()))
 }
