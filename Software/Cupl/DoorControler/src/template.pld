@@ -34,11 +34,11 @@ Sequence [C0..C2]{
          default next 0;
 
     present 1 
-        out WReg,On;
+        out WReg,busy;
         default next 2;
 
     present 2
-    	out On;
+    	out busy;
 	        if !WR & R0 next 3;
 	        if !WR & !R0 next 4;
 	        default next 2;
@@ -51,12 +51,12 @@ Sequence [C0..C2]{
     present 4
         out busy, On;
             if Psensor next 5;
-            if Psensor & SClose next 0;
+            if !Psensor & SClose next 0;
             default next 4;
             
      present 5
         out T,busy, On;
-            if SOpen next 4;
+            if SOpen & !Psensor next 4;
             default next 5;
 }
 
