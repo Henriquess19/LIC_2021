@@ -34,7 +34,7 @@ object LCD {
 
     private fun writeByte(rs: Boolean, data: Int) {
         writeNibble(rs,data.shr(4)) // /16 == ShiftRight 4 times
-        Time.sleep(2) //testar assim
+        Time.sleep(2)
         writeNibble(rs,data)
     }
 

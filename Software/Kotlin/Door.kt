@@ -19,7 +19,7 @@ object Door{
         var spd = speed
         if (spd > MAX_SPEED) spd = MAX_SPEED
         val x = OPEN_CMD + spd              /*Open action + speed*/
-        while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
+        while (!isFinished()){} /*Waiting for the busy signal*/
             HAL.writeBits(D_OUT_MASK, x)
             HAL.setBits(WR_MASK)
             HAL.clrBits(WR_MASK)
@@ -30,7 +30,7 @@ object Door{
         var spd=speed
         if (spd > MAX_SPEED) spd=MAX_SPEED
         val x = CLOSE_CMD + spd             /*Close action + speed*/
-        while (HAL.isBit(BUSY_MASK)){} /*Waiting for the busy signal*/
+        while (!isFinished()){} /*Waiting for the busy signal*/
         HAL.writeBits(D_OUT_MASK,x)
         HAL.setBits(WR_MASK)
         HAL.clrBits(WR_MASK)

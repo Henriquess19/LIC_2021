@@ -1,4 +1,4 @@
-data class Ut(val user:Int ,val pass:Int,val name:String, var acumulateTime:Long, var entryTime:Long)
+data class Ut(val user:Int, var pass:Int, val name:String, var acumulateTime:Long, var entryTime:Long)
 
 object Users {
 

@@ -10,20 +10,21 @@ object Maintenance {
         systemModem()
     }
 
-    private fun systemModem(){
-        println("What operation you want to proceed? \n 1 - Add User \n 2 - Remove User \n 3 - User List \n 4 - ShutDown ")
-        when(readLine()!!){
+    private fun systemModem() {
+        println("What operation you want to proceed? \n 1 - Add User \n 2 - Remove User \n 3 - User List \n 4 - Change Mode \n 5 - ShutDown ")
+        when (readLine()!!) {
             "1" -> addUser()
             "2" -> removeUser()
             "3" -> userList()
-            "4" -> shutDown()
+            "4" -> APP.mode()
+            "5" -> shutDown()
             else -> operationNotFound()
         }
     }
 
     private fun operationNotFound(){
         println("Operation Not Found \n ")
-        restartOperations()
+        systemModem()
     }
 
     private fun addUser(){
@@ -33,7 +34,7 @@ object Maintenance {
 
         if (add != null) println("You user is: $add")
         else println("Sorry, userList is full xOxO")
-        restartOperations()
+        systemModem()
     }
 
     private fun name():String{
@@ -70,23 +71,18 @@ object Maintenance {
         }else{
             println("User Not Found \n")
         }
-        restartOperations()
+        systemModem()
     }
 
     private fun userList(){
         Users.listUser().filterNotNull().forEach{println(it)}
-        restartOperations()
+        systemModem()
     }
 
     fun shutDown(){
         LCD.off()
         Users.updateList()
     }
-
-    private fun restartOperations(){
-        APP.mode()
-    }
-
 }
 fun main(){
    // LCD.init()

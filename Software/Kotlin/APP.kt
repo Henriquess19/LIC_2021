@@ -19,29 +19,59 @@ object APP {
         return if (getUser(userNumb)!= null) {
             getUser(userNumb)!!
         } else {
-            lineClear(WRITEACTIONSLINE)
+            TUI.lineClear(WRITEACTIONSLINE)
             TUI.writeleft("USER NOT FOUND", WRITEACTIONSLINE)
             Time.sleep(1000)
-            lineClear(WRITEACTIONSLINE)
+            TUI.lineClear(WRITEACTIONSLINE)
             user()
         }
     }
 
     private fun pass(){
         val user = user()
-        lineClear(WRITEACTIONSLINE)
+        TUI.lineClear(WRITEACTIONSLINE)
         for (i in 1..TENTNUMB) {
             TUI.writeleft("PASS:", WRITEACTIONSLINE)
             val code = TUI.key(4, false)
             if (code == user.pass) {
+                verifyChangePass(user)
                 return doorAction(user)
             }
-            lineClear(WRITEACTIONSLINE)
+            TUI.lineClear(WRITEACTIONSLINE)
             TUI.writeleft("PASS ERROR", WRITEACTIONSLINE)
             Time.sleep(1000)
-            lineClear(WRITEACTIONSLINE)
+            TUI.lineClear(WRITEACTIONSLINE)
         }
         return wrongPass()
+    }
+
+    private fun verifyChangePass(user:Ut) {
+        if (KBD.waitKey(2000) == '#') changePass(user)
+    }
+
+    private fun changePass(user:Ut){
+        LCD.clear()
+        TUI.writecenter("NEW PIN",0)
+        TUI.writeleft("PIN:",1)
+        val code1 = TUI.key(4,false)
+        if (code1 == -1) appPlay()
+
+        LCD.clear()
+        TUI.writecenter("CONFIRM PIN",0)
+        TUI.writeleft("PIN:",1)
+        val code2 = TUI.key(4,false)
+        if (code2 == -1) appPlay()
+
+        LCD.clear()
+        if (code1==code2){
+            user.pass=code1
+            TUI.writecenter("PIN CONFIRMED",0)
+            Time.sleep(1500)
+            return
+        }
+        TUI.writecenter("PIN ERROR",0)
+        changePass(user)
+        return
     }
 
     private fun wrongPass(){
@@ -58,6 +88,7 @@ object APP {
         Door.open(DOOR_OPEN_VELOCITY)
         Time.sleep(3000)
         Door.close(DOOR_CLOSE_VELOCITY)
+        while (!Door.isFinished()){}
     }
 
     private fun entryDoor(worker:Ut){
@@ -97,10 +128,6 @@ object APP {
         val minutes = (time/(60*1000))
         time -= minutes*(60*1000)
         return ("${hour}:${minutes}")
-    }
-
-    private fun lineClear(line:Int){                           /* Function to prevent clear all the screen but just one line*/
-        TUI.writeleft("                ",line)
     }
 
     private fun restart(){
